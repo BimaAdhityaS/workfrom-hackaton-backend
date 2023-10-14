@@ -20,7 +20,7 @@ const UseCaseModel = db.define('usecase',{
         }
     },
     capacity:{
-        type: DataTypes.INTEGER,
+        type: DataTypes.STRING,
         allowNull: false,
         validate:{
             notEmpty: true,

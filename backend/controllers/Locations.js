@@ -12,7 +12,7 @@ export const getLocations = async (req, res) => {
                 attributes: ['building_id', 'name', 'city', 'address', 'description', 'open_close', 'every', 'status', 'image', 'url', 'location_url'],
                 include: [{
                     model: User,
-                    attributes: ['name', 'email']
+                    attributes: ['name', 'email', 'role']
                 }]
             })
         } else {
@@ -23,10 +23,24 @@ export const getLocations = async (req, res) => {
                 },
                 include: [{
                     model: User,
-                    attributes: ['name', 'email']
+                    attributes: ['name', 'email', 'role']
                 }]
             })
         }
+        res.status(200).json(response);
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+}
+
+export const getLocationsNoUserId = async (req, res) => {
+    try {
+        let response;
+       {
+            response = await Locations.findAll({
+                attributes: ['building_id', 'name', 'city', 'address', 'description', 'open_close', 'every', 'status', 'image', 'url', 'location_url'],
+            })
+        } 
         res.status(200).json(response);
     } catch (error) {
         res.status(500).json({ message: error.message });
@@ -50,7 +64,7 @@ export const getLocationById = async (req, res) => {
                 attributes: ['building_id', 'name', 'city', 'address', 'description', 'open_close', 'every', 'status', 'image', 'url', 'location_url'],
                 include: [{
                     model: User,
-                    attributes: ['name', 'email']
+                    attributes: ['name', 'email','role']
                 }]
             })
         } else {
@@ -61,7 +75,7 @@ export const getLocationById = async (req, res) => {
                 },
                 include: [{
                     model: User,
-                    attributes: ['name', 'email']
+                    attributes: ['name', 'email','role']
                 }]
             })
         }
@@ -78,7 +92,7 @@ export const createLocation = async (req, res) => {
     const fileSize = file.data.length;
     const ext = path.extname(file.name);
     const fileName = file.md5 + ext;
-    const url = `${req.protocol}://${req.get("host")}/images/${fileName}`;
+    const url = `${req.protocol}://${req.get("host")}/images/location/${fileName}`;
     const allowedType = ['.png', '.jpg', '.jpeg'];
 
     if (!allowedType.includes(ext)) return res.status(400).json({ message: "Tipe file tidak diperbolehkan" });
@@ -121,7 +135,7 @@ export const updateLocation = async (req, res) => {
         const file = req.files.file;
         const fileSize = file.data.length;
         const ext = path.extname(file.name);
-        const fileName = file.md5 + ext;
+        fileName = file.md5 + ext;
         const allowedType = ['.png', '.jpg', '.jpeg'];
 
         if (!allowedType.includes(ext)) return res.status(400).json({ message: "Tipe file tidak diperbolehkan" });
@@ -136,7 +150,8 @@ export const updateLocation = async (req, res) => {
     }
 
     const { name, city, address, description, open_close, every, status, location_url } = req.body;
-    const url = `${req.protocol}://${req.get("host")}/images/${fileName}`;
+    const url = `${req.protocol}://${req.get("host")}/images/location/${fileName}`;
+
     try {
         await Locations.update({
             name: name,
@@ -172,10 +187,31 @@ export const deleteLocation = async (req, res) => {
         fs.unlinkSync(filePath);
         await Locations.destroy({
             where: {
-                id: req.params.id
+                building_id: req.params.id
             }
         })
         res.status(200).json({ message: "Gedung atau lokasi berhasil di hapus" });
+    } catch (error) {
+        console.log(error.message);
+    }
+}
+
+export const updateStatusLocation = async (req, res) => {
+    const location = await Locations.findOne({
+        where: {
+            building_id: req.params.id
+        }
+    });
+    if (!location) return res.status(404).json({ message: "Gedung atau Lokasi tidak ditemukan" });
+    try {
+        await Locations.update({
+            status: req.body.status
+        }, {
+            where: {
+                building_id: req.params.id
+            }
+        })
+        res.status(200).json({ message: "Status Gedung atau Lokasi berhasil di Update" });
     } catch (error) {
         console.log(error.message);
     }

@@ -68,7 +68,7 @@ export const createUseCase = async (req, res) => {
     const fileSize = file.data.length;
     const ext = path.extname(file.name);
     const fileName = file.md5 + ext;
-    const url = `${req.protocol}://${req.get("host")}/images/${fileName}`;
+    const url = `${req.protocol}://${req.get("host")}/images/usecase/${fileName}`;
     const allowedType = ['.png', '.jpg', '.jpeg'];
 
     if (!allowedType.includes(ext)) return res.status(400).json({ message: "Tipe file tidak diperbolehkan" });
@@ -113,7 +113,7 @@ export const updateUseCase = async (req, res) => {
         const file = req.files.file;
         const fileSize = file.data.length;
         const ext = path.extname(file.name);
-        const fileName = file.md5 + ext;
+        fileName = file.md5 + ext;
         const allowedType = ['.png', '.jpg', '.jpeg'];
         
         if (!allowedType.includes(ext)) return res.status(400).json({ message: "Tipe file tidak diperbolehkan" });
@@ -127,7 +127,7 @@ export const updateUseCase = async (req, res) => {
         });
     }
     const { name, category, capacity, price } = req.body;
-    const url = `${req.protocol}://${req.get("host")}/images/${fileName}`;
+    const url = `${req.protocol}://${req.get("host")}/images/usecase/${fileName}`;
     try {
         await UseCase.update({
             name,

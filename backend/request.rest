@@ -5,8 +5,8 @@ Content-Type:  application/json
 
 {
     "name":"Sukoco",
-    "phone_number":"082298473231",
-    "email":"mitra@gmail.com",
+    "phone_number":"0822984732333r",
+    "email":"mitra2@gmail.com",
     "password": "123456",
     "confirmpassword":"123456",
     "role":"mitra"
@@ -81,7 +81,7 @@ GET http://localhost:5000/locations
 
 ###
 //get Location by id
-DELETE  http://localhost:5000/locations/
+GET  http://localhost:5000/locations/9997a2c5-efcb-475e-b031-25edb6adca30
 
 #################################################################################################
 ###

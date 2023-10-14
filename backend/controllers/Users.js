@@ -89,7 +89,7 @@ export const deleteUser = async (req, res) => {
     try {
         await User.destroy({
             where:{
-                id: user.id
+                uuid: req.params.id
             }
         });
         res.status(200).json({msg: "User Deleted"});
