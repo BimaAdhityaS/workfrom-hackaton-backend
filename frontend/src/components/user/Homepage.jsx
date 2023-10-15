@@ -93,13 +93,13 @@ const Homepage = () => {
             {properties.slice(0, 3).map((property) => {
               if (property.status === "VERIFIED") {
                 return (
-                  <div className="card w-96 bg-abu" key={property.id}>
+                  <div className="card w-96 bg-abu rounded-b-xl rounded-t-none" key={property.id}>
                     <figure><img src={property.url} alt="img" className='w-96' /></figure>
                     <div className="card-body">
-                      <h2 className="card-title text-4xl">{property.name}</h2>
+                      <h2 className="card-title text-4xl mb-4">{property.name}</h2>
                       <div className='flex'>
                         <img src='https://cdn.animaapp.com/projects/6527f422a645123bec2b5506/releases/6527f527bcf1089301a069e4/img/vector-13.svg'></img>
-                        <p className='ml-3'>{property.city}</p>
+                        <p className='ml-3 my-2 font-medium'>{property.city}</p>
                       </div>
                       <p>{property.address}</p>
                       <div className="card-actions justify-center">

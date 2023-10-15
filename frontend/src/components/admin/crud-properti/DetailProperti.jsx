@@ -240,7 +240,6 @@ const DetailProperti = () => {
         }
     }
 
-
     return (
         <div>
             <h1 className='text-xl my-2 font-medium mx-4'>Properti</h1>
@@ -392,7 +391,7 @@ const DetailProperti = () => {
                                 ))}
                             </tbody>
                         </table>
-                        <button className="btn btn-sm btn-success mx-16 my-4" onClick={() => document.getElementById('my_modal_2').showModal()}>Tambahkan Nearby Facilities</button>
+                        <button className="btn btn-sm btn-success w-full my-3" onClick={() => document.getElementById('my_modal_2').showModal()}>Tambahkan Nearby Facilities</button>
                         <dialog id="my_modal_2" className="modal">
                             <div className="modal-box">
                                 <form method="dialog">
@@ -407,10 +406,14 @@ const DetailProperti = () => {
                                         </label>
                                         <select className="select select-bordered w-full max-w-xs" value={category} onChange={(e) => setCategory(e.target.value)}>
                                             <option>Kategori Fasilitas</option>
+                                            <option>Train</option>
                                             <option>Taxi</option>
                                             <option>Hospital</option>
-                                            <option>Food</option>
+                                            <option>Resto</option>
+                                            <option>Caffe</option>
+                                            <option>Hotel</option>
                                             <option>Mall</option>
+                                            <option>Gym</option>
                                         </select>
 
                                         <label className="label">
@@ -467,7 +470,7 @@ const DetailProperti = () => {
                                                         <th>{index + 1}</th>
                                                         <td>{planpricing.name}</td>
                                                         <td>{planpricing.description}</td>
-                                                        <td>{planpricing.price}</td>
+                                                        <td>{planpricing.price.toLocaleString('id-ID', { minimumFractionDigits: 0 })}</td>
                                                         <td>{planpricing.pax}</td>
                                                         <td>
                                                             <Link to={`planpricing-edit/${planpricing.id}`} className='btn btn-sm bg-white text-black hover:bg-blue-400 mr-2'>Edit</Link>
@@ -505,6 +508,7 @@ const DetailProperti = () => {
                                             </label>
                                             <select className="select select-ghost w-full" value={pax} onChange={(e) => setPax(e.target.value)}>
                                                 <option disabled selected>Pax (Pay Per)</option>
+                                                <option>/hour</option>
                                                 <option>/day</option>
                                                 <option>/month</option>
                                                 <option>/year</option>
@@ -591,7 +595,7 @@ const DetailProperti = () => {
                                     <p className='font-medium'>{usecase.category}</p>
                                     <div className='flex'>
                                         <p className='mr-2'>Capacity : {usecase.capacity}</p>
-                                        <p>Price : {usecase.price}</p>
+                                        <p>Price :{usecase.price.toLocaleString('id-ID', { minimumFractionDigits: 0 })}</p>
                                     </div>
                                     <div className="card-actions">
                                         <Link to={`usecase-edit/${usecase.id}`} className="btn btn-sm w-16 mr-1 btn-info">Edit</Link>
